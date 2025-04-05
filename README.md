@@ -14,7 +14,7 @@ When run again, it acts as an update tool, ensuring you always have the latest v
 
 ## Quickstart
 
-To quickly download and install Cursor Installer, run the following command:
+To quickly download and install Cursor, run the following command:
 
 ```sh
 git clone https://github.com/Mapuut/Cursor-Installer.git && cd Cursor-Installer && ./install.sh
