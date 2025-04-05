@@ -1,6 +1,6 @@
 # Cursor for Linux Installer
 
-This is an installation/update script for Cursor on Linux (tested on Gnome). The script:
+This is an installation/update script for Cursor on Linux (tested on Gnome, Cursor 0.48.2). The script:
 
 - Downloads the latest version of Cursor
 - Installs it on your system
