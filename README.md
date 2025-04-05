@@ -1,4 +1,16 @@
-# Installation Instructions
+# Cursor for Linux Installer
+
+This is an installation/update script for Cursor on Linux (tested on Gnome). The script:
+
+- Downloads the latest version of Cursor
+- Installs it on your system
+- Creates a desktop icon for easy access
+- Fixes known bugs:
+  - Double title bar issue
+  - Drag and drop not working
+- Adds Cursor to the "Open with..." menu
+
+When run again, it acts as an update tool, ensuring you always have the latest version with all fixes applied.
 
 ## Automatic Installation
 
