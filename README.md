@@ -12,9 +12,17 @@ This is an installation/update script for Cursor on Linux (tested on Gnome, Curs
 
 When run again, it acts as an update tool, ensuring you always have the latest version with all fixes applied.
 
+## Quickstart
+
+To quickly download and install Cursor Installer, run the following command:
+
+```sh
+git clone https://github.com/Mapuut/Cursor-Installer.git && cd Cursor-Installer && ./install.sh
+```
+
 ## Automatic Installation
 
-1. Run `install.sh` by writing in console
+1. Run `install.sh` by typing in your console:
 
 ```sh
 ./install.sh
