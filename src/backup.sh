@@ -16,7 +16,7 @@ has_backups() {
 # Function to get list of backup versions
 get_backup_versions() {
     if [ -d "$BACKUP_DIR" ]; then
-        ls -d "$BACKUP_DIR"/cursor_* 2>/dev/null | sed 's/.*cursor_//'
+        find "$BACKUP_DIR" -maxdepth 1 -type d -name "cursor_*" -printf "%f\n" 2>/dev/null | sed 's/^cursor_//'
     fi
 }
 

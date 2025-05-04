@@ -140,20 +140,67 @@ restore_backup() {
     return $?
 }
 
+# Function to remove a backup
+remove_backup() {
+    local version=$1
+    if [ -d "$BACKUP_DIR/cursor_$version" ]; then
+        rm -rf "$BACKUP_DIR/cursor_$version"
+        echo "Backup version $version removed successfully."
+        return 0
+    else
+        echo "Error: Backup version $version not found."
+        return 1
+    fi
+}
+
 # Main menu
 echo "Cursor Installation Menu"
 echo "1. Install/Update Cursor"
 
 if has_backups; then
-    echo "2. Restore from backup"
+    echo "2. Manage Backups"
     echo "Available backup versions:"
     get_backup_versions | while read version; do
         echo "   - Version $version"
     done
     echo -n "Please select an option (1-2): "
     read choice
+
+    if [ "$choice" = "2" ]; then
+        echo "Select a backup version:"
+        # Use mapfile to handle spaces in version names
+        mapfile -t backups < <(get_backup_versions)
+        for i in "${!backups[@]}"; do
+            echo "[$i] Version ${backups[$i]}"
+        done
+        read -p "Enter the number of the backup to manage: " backup_choice
+        
+        if [[ "$backup_choice" =~ ^[0-9]+$ ]] && [ "$backup_choice" -lt ${#backups[@]} ]; then
+            selected_version=$(basename "${backups[$backup_choice]}" | sed 's/cursor_//')
+            echo "Selected backup version $selected_version"
+            echo "1. Restore to this backup"
+            echo "2. Remove this backup"
+            read -p "Choose an action (1-2): " action_choice
+            
+            case $action_choice in
+                1)
+                    restore_backup "$selected_version"
+                    ;;
+                2)
+                    remove_backup "$selected_version"
+                    ;;
+                *)
+                    echo "Invalid choice. Exiting..."
+                    exit 1
+                    ;;
+            esac
+        else
+            echo "Invalid backup selection. Exiting..."
+            exit 1
+        fi
+    fi
 else
-    echo "2. Restore from backup (No Backups)"
+    echo "2. Manage Backups (No Backups)"
     echo "No backups found. Proceeding with installation..."
     choice=1
 fi
@@ -163,10 +210,10 @@ case $choice in
         install_update
         ;;
     2)
-        if has_backups; then
-            restore_backup
-        else
-            install_update
+        if ! has_backups; then
+            # install_update
+            echo "No backups found. Exiting..."
+            exit 1
         fi
         ;;
     *)
