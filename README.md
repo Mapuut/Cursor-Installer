@@ -36,3 +36,15 @@ git clone https://github.com/Mapuut/Cursor-Installer.git && cd Cursor-Installer 
    - Or run `download.sh`
 2. Run `fix-header.sh`
 3. Run `create-desktop.sh`
+
+## Common Issues
+
+### Sign In/Sign Up Buttons Not Working
+
+If clicking the Sign In or Sign Up buttons doesn't open anything:
+
+1. Change your default browser in your system settings
+2. Try clicking the buttons again
+
+This issue typically occurs with Firefox, updating/downgrading browser might solve issue as well. Issue is with browser or Cursor itself, **NOT** a side effect of this installer.
+
