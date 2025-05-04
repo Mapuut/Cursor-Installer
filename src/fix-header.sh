@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Step 1: Extract the AppImage
-./Cursor.AppImage --appimage-extract
+cd ../tmp && ./Cursor.AppImage --appimage-extract && cd ../src
 
 # Step 2: Define the path to the target file
-TARGET_FILE="squashfs-root/usr/share/cursor/resources/app/out/main.js"
+TARGET_FILE="../tmp/squashfs-root/usr/share/cursor/resources/app/out/main.js"
 
 
 # Step 3: Replace all occurrences of ",minHeight" with ",frame:false,minHeight"

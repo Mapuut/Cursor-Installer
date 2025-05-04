@@ -9,6 +9,7 @@ This is an installation/update script for Cursor on Linux (tested on Gnome, Curs
   - Double title bar issue
   - Drag and drop not working
 - Adds Cursor to the "Open with..." menu
+- Manages backups
 
 When run again, it acts as an update tool, ensuring you always have the latest version with all fixes applied.
 
@@ -31,7 +32,7 @@ git clone https://github.com/Mapuut/Cursor-Installer.git && cd Cursor-Installer 
 ## Manual Installation
 
 1. Download Cursor for Linux:
-   - Place it in this folder and rename to `Cursor.AppImage`
+   - Place it in this `tmp/` folder and rename to `Cursor.AppImage`
    - Or run `download.sh`
 2. Run `fix-header.sh`
 3. Run `create-desktop.sh`

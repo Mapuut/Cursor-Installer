@@ -1,14 +1,13 @@
 #!/bin/bash
 
-# Define the destination directory
-DEST_DIR="$HOME/.local/share/applications/cursor"
+# Source global variables
+source ./globals.sh
 
 # Check if squashfs-root directory exists
-if [ ! -d "squashfs-root" ]; then
-    echo "Error: squashfs-root directory not found!"
+if [ ! -d "$TEMP_DIR_EXTRACTED" ]; then
+    echo "Error: $TEMP_DIR_EXTRACTED directory not found!"
     exit 1
 fi
-
 
 # Check if the destination directory exists
 if [ -d "$DEST_DIR" ]; then
@@ -20,9 +19,25 @@ fi
 echo "Creating directory $DEST_DIR..."
 mkdir -p "$DEST_DIR"
 
+# Source the version function
+source ./version.sh
+
+# Get the version from the desktop file
+VERSION=$(get_cursor_version "$TEMP_DIR_EXTRACTED/cursor.desktop")
+if [ -z "$VERSION" ]; then
+    echo "Warning: Could not determine Cursor version."
+    VERSION="unknown"
+fi
+
+# Remove cursor.desktop from TEMP_DIR_EXTRACTED if it exists
+# if [ -f "$TEMP_DIR_EXTRACTED/cursor.desktop" ]; then
+#     echo "Removing cursor.desktop from temporary directory..."
+#     rm "$TEMP_DIR_EXTRACTED/cursor.desktop"
+# fi
+
 # Move the contents of squashfs-root to the destination directory
-echo "Moving squashfs-root contents to $DEST_DIR..."
-cp -r squashfs-root/* "$DEST_DIR/"
+echo "Moving $TEMP_DIR_EXTRACTED contents to $DEST_DIR..."
+cp -r "$TEMP_DIR_EXTRACTED"/* "$DEST_DIR/"
 
 # Copy the desktop file to applications directory
 echo "Copying cursor.desktop to applications directory..."
@@ -30,7 +45,8 @@ if [ -f "$HOME/.local/share/applications/cursor.desktop" ]; then
     echo "Desktop file already exists. Replacing it..."
     rm "$HOME/.local/share/applications/cursor.desktop"
 fi
+
 # Read the desktop file from res folder, replace $HOME with actual home path, and write to applications directory
-sed "s|\$HOME|$HOME|g" "../res/cursor.desktop" > "$HOME/.local/share/applications/cursor.desktop"
+sed -e "s|\$DEST_DIR|$DEST_DIR|g" -e "s|\$VERSION|$VERSION|g" "../res/cursor.desktop" > "$DEST_DIR_DESKTOP/cursor.desktop"
 
 echo "Installation complete. Cursor is now available in your applications menu. You might need to wait a second for it to show up."

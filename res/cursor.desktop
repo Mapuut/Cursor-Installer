@@ -2,13 +2,13 @@
 Name=Cursor
 Comment=The AI Code Editor.
 GenericName=Text Editor
-Exec=$HOME/.local/share/applications/cursor/usr/bin/cursor --no-sandbox %U
+Exec=$DEST_DIR/usr/bin/cursor --no-sandbox %U
 Terminal=false
 Type=Application
-Icon=$HOME/.local/share/applications/cursor/code.png
+Icon=$DEST_DIR/code.png
 StartupNotify=false
 StartupWMClass=Cursor
-X-AppImage-Version=0.48.2
+X-AppImage-Version=$VERSION
 MimeType=x-scheme-handler/cursor;
 Categories=Utility;
 Keywords=cursor;
