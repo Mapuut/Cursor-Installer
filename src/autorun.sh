@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Function to check if running as sudo/root
+check_not_sudo() {
+    if [ "$EUID" -eq 0 ]; then
+        echo "Error: This script should not be run as root/sudo."
+        echo "Please run without sudo."
+        exit 1
+    fi
+}
+
+# Check sudo status before proceeding
+check_not_sudo
+
 # Source global variables
 source ./globals.sh
 
