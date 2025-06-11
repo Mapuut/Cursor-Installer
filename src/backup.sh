@@ -23,6 +23,7 @@ get_backup_versions() {
 # Function to create a backup of the current Cursor installation
 create_backup() {
     local desktop_file="$DEST_DIR_DESKTOP/cursor.desktop"
+    local url_handler_file="$DEST_DIR_DESKTOP/cursor-url-handler.desktop"
     local version=$(get_cursor_version "$desktop_file")
     
     if [ -z "$version" ]; then
@@ -50,6 +51,11 @@ create_backup() {
         # Backup desktop file if it exists
         if [ -f "$desktop_file" ]; then
             cp "$desktop_file" "$BACKUP_DIR/cursor_$version/"
+        fi
+        
+        # Backup url handler file if it exists
+        if [ -f "$url_handler_file" ]; then
+            cp "$url_handler_file" "$BACKUP_DIR/cursor_$version/"
         fi
         
         echo "Backup created successfully for version $version"
@@ -91,6 +97,12 @@ restore_backup() {
             rm "$DEST_DIR_DESKTOP/cursor.desktop"
         fi
         
+        # Remove current url handler file if it exists
+        if [ -f "$DEST_DIR_DESKTOP/cursor-url-handler.desktop" ]; then
+            echo "Removing current url handler file..."
+            rm "$DEST_DIR_DESKTOP/cursor-url-handler.desktop"
+        fi
+        
         # Restore from backup
         echo "Restoring Cursor files..."
         cp -r "$BACKUP_DIR/cursor_$specified_version/cursor/"* "$DEST_DIR/"
@@ -99,6 +111,12 @@ restore_backup() {
         if [ -f "$BACKUP_DIR/cursor_$specified_version/cursor.desktop" ]; then
             echo "Restoring desktop file..."
             cp "$BACKUP_DIR/cursor_$specified_version/cursor.desktop" "$DEST_DIR_DESKTOP/"
+        fi
+
+        # Restore url handler file if it exists in the backup
+        if [ -f "$BACKUP_DIR/cursor_$specified_version/cursor-url-handler.desktop" ]; then
+            echo "Restoring url handler file..."
+            cp "$BACKUP_DIR/cursor_$specified_version/cursor-url-handler.desktop" "$DEST_DIR_DESKTOP/"
         fi
         
         echo "Backup restored successfully for version $specified_version"
@@ -149,7 +167,13 @@ restore_backup() {
             echo "Removing current desktop file..."
             rm "$DEST_DIR_DESKTOP/cursor.desktop"
         fi
-        
+
+        # Remove current url handler file if it exists
+        if [ -f "$DEST_DIR_DESKTOP/cursor-url-handler.desktop" ]; then
+            echo "Removing current url handler file..."
+            rm "$DEST_DIR_DESKTOP/cursor-url-handler.desktop"
+        fi
+
         # Restore from backup
         echo "Restoring Cursor files..."
         cp -r "${backups[$selection]}/cursor" "$DEST_DIR/"
@@ -160,6 +184,12 @@ restore_backup() {
             cp "${backups[$selection]}/cursor.desktop" "$DEST_DIR_DESKTOP/"
         fi
         
+        # Restore url handler file if it exists in the backup
+        if [ -f "${backups[$selection]}/cursor-url-handler.desktop" ]; then
+            echo "Restoring url handler file..."
+            cp "${backups[$selection]}/cursor-url-handler.desktop" "$DEST_DIR_DESKTOP/"
+        fi
+
         echo "Backup restored successfully for version $version"
         return 0
     fi

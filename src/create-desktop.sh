@@ -49,4 +49,13 @@ fi
 # Read the desktop file from res folder, replace $HOME with actual home path, and write to applications directory
 sed -e "s|\$DEST_DIR|$DEST_DIR|g" -e "s|\$VERSION|$VERSION|g" "../res/cursor.desktop" > "$DEST_DIR_DESKTOP/cursor.desktop"
 
+# Copy the url handler desktop file to applications directory
+echo "Copying cursor-url-handler.desktop to applications directory..."
+if [ -f "$HOME/.local/share/applications/cursor-url-handler.desktop" ]; then
+    echo "Desktop file already exists. Replacing it..."
+    rm "$HOME/.local/share/applications/cursor-url-handler.desktop"
+fi
+
+sed -e "s|\$DEST_DIR|$DEST_DIR|g" "../res/cursor-url-handler.desktop" > "$DEST_DIR_DESKTOP/cursor-url-handler.desktop"
+
 echo "Installation complete. Cursor is now available in your applications menu. You might need to wait a second for it to show up."

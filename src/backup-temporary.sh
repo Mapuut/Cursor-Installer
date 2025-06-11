@@ -26,6 +26,10 @@ create_temporary_backup() {
         if [ -f "$DEST_DIR_DESKTOP/cursor.desktop" ]; then
             cp "$DEST_DIR_DESKTOP/cursor.desktop" "$TEMP_BACKUP_DIR/"
         fi
+
+        if [ -f "$DEST_DIR_DESKTOP/cursor-url-handler.desktop" ]; then
+            cp "$DEST_DIR_DESKTOP/cursor-url-handler.desktop" "$TEMP_BACKUP_DIR/"
+        fi
         
         echo "Temporary backup created successfully."
         return 0
@@ -57,6 +61,11 @@ restore_temporary_backup() {
             echo "Removing current desktop file..."
             rm "$DEST_DIR_DESKTOP/cursor.desktop"
         fi
+
+        if [ -f "$DEST_DIR_DESKTOP/cursor-url-handler.desktop" ]; then
+            echo "Removing current url handler file..."
+            rm "$DEST_DIR_DESKTOP/cursor-url-handler.desktop"
+        fi
         
         # Restore from temporary backup
         echo "Restoring Cursor files..."
@@ -66,6 +75,11 @@ restore_temporary_backup() {
         if [ -f "$TEMP_BACKUP_DIR/cursor.desktop" ]; then
             echo "Restoring desktop file..."
             cp "$TEMP_BACKUP_DIR/cursor.desktop" "$DEST_DIR_DESKTOP/"
+        fi
+
+        if [ -f "$TEMP_BACKUP_DIR/cursor-url-handler.desktop" ]; then
+            echo "Restoring url handler file..."
+            cp "$TEMP_BACKUP_DIR/cursor-url-handler.desktop" "$DEST_DIR_DESKTOP/"
         fi
         
         echo "Successfully restored from temporary backup version $backup_version."
