@@ -8,7 +8,7 @@ This is an installation/update script for Cursor on Linux (tested on Gnome, Curs
 - Fixes known bugs:
   - Double title bar issue
   - Drag and drop not working
-  - URL handler (can sign-in in extensions e.g GitLens)
+  - URL handler (can sign in into extensions e.g GitLens)
 - Adds Cursor to the "Open with..." menu
 - Manages backups
 
