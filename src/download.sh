@@ -28,7 +28,9 @@ if ! command -v curl &> /dev/null; then
 fi
 
 # Using grep and sed instead of jq
-APPIMAGE_URL=$( curl -s 'https://cursor.com/api/download?platform=linux-x64&releaseTrack=latest' | grep -o '"downloadUrl":"[^"]*"' | sed 's/"downloadUrl":"//;s/"$//' )
+# https://www.cursor.com/download/stable/linux-x64
+# APPIMAGE_URL=$( curl -s 'https://cursor.com/api/download?platform=linux-x64&releaseTrack=latest' | grep -o '"downloadUrl":"[^"]*"' | sed 's/"downloadUrl":"//;s/"$//' )
+APPIMAGE_URL="https://www.cursor.com/download/stable/linux-x64"
 
 # Create tmp directory if it doesn't exist
 if [ -d "$TEMP_DIR" ]; then
